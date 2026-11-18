@@ -54,21 +54,38 @@ app.post("/recipes", async (req, res) => {
 
 //  Iteration 4 - Get All Recipes
 //  GET  /recipes route
-app.get("/recipes", async(req, res)=>{
-    try{
-        const response = await Recipe.find ();
-        res.status(200).json(response);
-    }
-    catch(error){
-        res.status(500).json({message: "Error while retrieving all recipes."})
-    }
-})
+app.get("/recipes", async (req, res) => {
+  try {
+    const response = await Recipe.find();
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ message: "Error while retrieving all recipes." });
+  }
+});
 
 //  Iteration 5 - Get a Single Recipe
 //  GET  /recipes/:id route
 
+app.get("/recipes/:id", async (req, res) => {
+  try {
+    const response = await Recipe.findById(req.params.id);
+
+    if (!response) {
+      res.send("No recipe was found by that id");
+    } else {
+      res.status(200).json(response);
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error while retrieving recipe." });
+  }
+});
+
 //  Iteration 6 - Update a Single Recipe
 //  PUT  /recipes/:id route
+
+
 
 //  Iteration 7 - Delete a Single Recipe
 //  DELETE  /recipes/:id route
