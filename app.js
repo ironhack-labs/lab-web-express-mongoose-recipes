@@ -71,7 +71,7 @@ app.get("/recipes/:id", async (req, res) => {
     const response = await Recipe.findById(req.params.id);
 
     if (!response) {
-      res.send("No recipe was found by that id");
+      res.status(404).json({message: "No recipe was found with that id"})
     } else {
       res.status(200).json(response);
     }
@@ -88,7 +88,7 @@ app.put("/recipes/:id", async (req, res) => {
     const response = await Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
 
     if (!response) {
-      res.send("No recipe was found by that id");
+      res.status(404).json({message: "No recipe was found with that id"})
     } else {
       res.status(200).json(response);
     }
@@ -100,6 +100,21 @@ app.put("/recipes/:id", async (req, res) => {
 //  Iteration 7 - Delete a Single Recipe
 //  DELETE  /recipes/:id route
 
+app.delete("/recipes/:id", async (req, res)=>{
+    try {
+        const response = await Recipe.findByIdAndDelete (req.params.id)
+
+        if(!response){
+            res.status(404).json({message: "no recipe was found with that id"})
+        }
+        else{
+            res.sendStatus(204);
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: "Error while deleting recipe." });
+    }
+})
 // Start the server
 app.listen(3000, () => console.log("My first app listening on port 3000!"));
 
