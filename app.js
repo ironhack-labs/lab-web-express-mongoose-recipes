@@ -1,8 +1,11 @@
 const express = require("express");
 const logger = require("morgan");
-const mongoose = require("mongoose");
+
 
 const app = express();
+const mongoose = require("mongoose");
+
+
 
 
 
@@ -24,6 +27,7 @@ mongoose.connect(MONGODB_URI)
     console.log("Error connecting to mongo", error);
 }
 
+const Recipe = require("./models/Recipe.model")
 
 // ROUTES
 //  GET  / route - This is just an example route
