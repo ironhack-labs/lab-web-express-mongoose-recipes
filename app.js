@@ -76,16 +76,26 @@ app.get("/recipes/:id", async (req, res) => {
       res.status(200).json(response);
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error while retrieving recipe." });
+    res.status(500).json({ message: "Error while retrieving recipe." });
   }
 });
 
 //  Iteration 6 - Update a Single Recipe
 //  PUT  /recipes/:id route
 
+app.put("/recipes/:id", async (req, res) => {
+  try {
+    const response = await Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
 
+    if (!response) {
+      res.send("No recipe was found by that id");
+    } else {
+      res.status(200).json(response);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error while retrieving recipe." });
+  }
+});
 
 //  Iteration 7 - Delete a Single Recipe
 //  DELETE  /recipes/:id route
